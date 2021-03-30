@@ -74,4 +74,20 @@ class Error
           puts "#{@file}:#{i+1}: Empty line, please remove the empty line"
         end
     end
+
+    def check
+        (@lines.length).times do |i|
+          open_close(@lines[i])
+          break if @stopper > 0
+          closing_brackets(@lines[i],i)
+          if @counter_end < 0
+            puts "#{@file}:#{i+1}: unexpected keyword END"
+            break
+          end
+          trailing_white_space(@lines[i],i)
+          indentation(@lines[i],i)
+          empty_line(@lines,i)
+          puts "#{@file}:#{@lines.length}: missing keyword END"if @counter_end > 0 && i == @lines.length-1
+        end
+    end
 end
