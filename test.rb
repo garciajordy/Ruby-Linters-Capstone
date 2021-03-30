@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Test
   def initialize(name)
     @name = [name]
