@@ -26,4 +26,12 @@ class Error
           puts "#{@file}:#{i+1}: trailing white space, please remove the white space"
         end
     end
+
+    def open_close(lines)
+        if lines.include?('class') || lines.include?('def') || lines.include?('if') 
+          @counter_end += 1
+        elsif lines.include?('end')
+            @counter_end -= 1
+        end
+    end
 end
