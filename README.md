@@ -156,7 +156,7 @@ end
 ```
 class Test
   def initialize(name)
-@name = [name]
+    @name = [name]
     @age = name.length
   end
 
