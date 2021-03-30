@@ -34,4 +34,38 @@ class Error
             @counter_end -= 1
         end
     end
+
+    def closing_brackets(lines,i)
+ 
+        if !@brackets.empty? && @stopper == 0
+          puts "#{@file}:#{i}: Expecting a closing bracket \')\',\'}\',\']\'"
+          @stopper += 1
+        end
+    
+        lines.each_char do |brack|
+            case brack
+            when '(', '{', '['
+                @brackets[brack] = i+1
+                @bracky.push(brack)
+            when ')'
+                if @bracky.pop() != '('
+                  puts "#{@file}:#{i+1}: Unexpected closing bracket \')\'"
+                else
+                  @brackets.delete("(")
+                end
+            when '}'
+                if @bracky.pop() != '{'
+                  puts "#{@file}:#{i+1}: Unexpected closing bracket \'}\'" 
+                else
+                  @brackets.delete("{")
+                end
+            when ']'
+                if @bracky.pop() != '['
+                  puts "#{@file}:#{i+1}: Unexpected closing bracket \']\'" 
+                else
+                  @brackets.delete("[")
+                end
+            end
+        end
+      end
 end
