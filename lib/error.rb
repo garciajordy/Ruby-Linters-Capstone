@@ -20,4 +20,10 @@ class Error
          end
       end
     end
+
+    def trailing_white_space(lines,i)
+        if lines[-2] == " " || lines[-1] == " "
+          puts "#{@file}:#{i+1}: trailing white space, please remove the white space"
+        end
+    end
 end
