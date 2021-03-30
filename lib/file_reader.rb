@@ -12,5 +12,6 @@ class FileReader < Error
     @brackets = {}
     @bracky = []
     @stopper = 0
+    @tester = 0
   end
 end
