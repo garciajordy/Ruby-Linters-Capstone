@@ -67,5 +67,11 @@ class Error
                 end
             end
         end
-      end
+    end
+
+    def empty_line(lines,i)
+        if lines[i].strip.length == 0 && @counter > 0
+          puts "#{@file}:#{i+1}: Empty line, please remove the empty line"
+        end
+    end
 end
