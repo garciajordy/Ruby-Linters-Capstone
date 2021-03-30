@@ -16,7 +16,7 @@ $ cd <folder>
 ```
 
 ```
-$ git clone https://github.com/JulianaOsemeke/tic_tac_toe
+$ git clone https://github.com/garciajordy/Ruby-Linters-Capstone.git
 ```
 
 ## To Test For Linter Errors
