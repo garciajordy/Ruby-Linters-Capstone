@@ -1,4 +1,4 @@
-# Error class
+# Error clas
 class Error
   def indentation(lines, i)
     unless lines.strip.empty?
