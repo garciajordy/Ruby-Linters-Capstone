@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
+# Error class
 class Error
   def indentation(lines, i)
-    #  puts "#{@lines[i].length - 1}  #{@lines[i]}"
     unless lines.strip.empty?
       @white_space = lines.index(lines.lstrip)
       if lines.include?('end')
