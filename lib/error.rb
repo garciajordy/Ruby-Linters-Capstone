@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
 # Error class
 class Error
@@ -52,18 +52,24 @@ class Error
         if @bracky.pop != '('
           puts "#{@file}:#{ind + 1}: Unexpected closing bracket \')\'"
           @tester += 1
+        elsif @tester > 50
+          @tester -= 30
         else
           @brackets.delete('(')
         end
       when '}'
         if @bracky.pop != '{'
           puts "#{@file}:#{ind + 1}: Unexpected closing bracket \'}\'"
+        elsif @tester > 50
+          @tester -= 30
         else
           @brackets.delete('{')
         end
       when ']'
         if @bracky.pop != '['
           puts "#{@file}:#{ind + 1}: Unexpected closing bracket \']\'"
+        elsif @tester > 50
+          @tester -= 30
         else
           @brackets.delete('[')
         end
@@ -95,9 +101,10 @@ class Error
       empty_line(@lines, i)
       if @counter_end.positive? && i == @lines.length - 1
         puts "#{@file}:#{@lines.length}: missing keyword END"
+        @tester += 5
       end
     end
   end
 end
 
-# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
