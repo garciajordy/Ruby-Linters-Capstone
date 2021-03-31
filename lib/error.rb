@@ -1,23 +1,27 @@
+# frozen_string_literal: true
+
 # Error Class to find all the errors
 class Error
   private
-# rubocop:disable Metrics/CyclomaticComplexity
+
+  # rubocop:disable Metrics/CyclomaticComplexity
   def indentation(lines, ind)
     @white_space = lines.index(lines.lstrip)
-      unless lines.strip.empty?
+    unless lines.strip.empty?
       if lines.include?('end')
         @max_space -= 2
         @counter -= 1 if @counter != 0
       end
       if @white_space != @max_space
-        @errors << "#{@file}:#{ind + 1}: Use #{@max_space} (not #{@white_space}) spaces for indentation" 
+        @errors << "#{@file}:#{ind + 1}: Use #{@max_space} (not #{@white_space}) spaces for indentation"
         @tester += 2
       end
       @max_space += 2 if lines.include?('class') || lines.include?('def')
       @counter += 1 if lines.include?('def')
-      end
+    end
   end
-# rubocop:enable Metrics/CyclomaticComplexity
+
+  # rubocop:enable Metrics/CyclomaticComplexity
   def trailing_white_space(lines, ind)
     if lines[-2] == ' ' || lines[-1] == ' '
       @errors << "#{@file}:#{ind + 1}: trailing white space, please"\
@@ -33,7 +37,7 @@ class Error
       @counter_end -= 1
     end
   end
-# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
   def closing_brackets(lines, ind)
     if !@brackets.empty? && @stopper.zero?
@@ -73,7 +77,8 @@ class Error
       end
     end
   end
-# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def empty_line(lines, ind)
     if lines[ind].strip.empty? && @counter.positive?
       @errors << "#{@file}:#{ind + 1}: Empty line, please remove the empty line"

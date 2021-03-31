@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'error'
 class FileReader < Error
   def initialize(file_name)
