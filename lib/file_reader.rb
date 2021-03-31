@@ -1,6 +1,5 @@
 require_relative 'error'
 class FileReader < Error
-  super
   def initialize(file_name)
     @file = file_name.to_s
     @lines = File.readlines(@file)
@@ -13,5 +12,6 @@ class FileReader < Error
     @errors = []
     @stopper = 0
     @tester = 0
+    super if @tester == 70
   end
 end
