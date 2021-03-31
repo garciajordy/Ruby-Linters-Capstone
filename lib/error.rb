@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Error Class to find all the errors
 class Error
   private
@@ -7,7 +5,7 @@ class Error
   # rubocop:disable Metrics/CyclomaticComplexity
   def indentation(lines, ind)
     @white_space = lines.index(lines.lstrip)
-    unless lines.strip.empty?
+    if lines.strip.length.positive?
       if lines.include?('end')
         @max_space -= 2
         @counter -= 1 if @counter != 0
@@ -27,6 +25,8 @@ class Error
       @errors << "#{@file}:#{ind + 1}: trailing white space, please"\
       ' remove the white space'
       @tester += 1
+    elsif @tester > 50
+      @tester = 5
     end
   end
 
