@@ -1,5 +1,7 @@
 # Error Class to find all the errors
 class Error
+  attr_accessor :white_space
+
   private
 
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -90,6 +92,10 @@ class Error
   end
 
   public
+
+  def errors(num)
+    @errors[num]
+  end
 
   def check
     @lines.length.times do |i|

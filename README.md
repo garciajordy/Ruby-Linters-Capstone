@@ -19,6 +19,16 @@ $ cd <folder>
 $ git clone https://github.com/garciajordy/Ruby-Linters-Capstone.git
 ```
 
+## To Use Rspec
+
+```
+$ cd Ruby-Linters-Capstone
+```
+
+```
+$ rspec
+```
+
 ## To Test For Linter Errors
 
 > Copy your ruby file in the Ruby-Linters-Capstone folder
