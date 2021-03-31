@@ -1,21 +1,23 @@
 # Error Class to find all the errors
 class Error
   private
-
+# rubocop:disable Metrics/CyclomaticComplexity
   def indentation(lines, ind)
-      @white_space = lines.index(lines.lstrip)
+    @white_space = lines.index(lines.lstrip)
       unless lines.strip.empty?
       if lines.include?('end')
         @max_space -= 2
         @counter -= 1 if @counter != 0
       end
-      @errors << "#{@file}:#{ind + 1}: the indentation should be #{@max_space}"\
-      " spaces, instead of #{@white_space}" if @white_space != @max_space
+      if @white_space != @max_space
+        @errors << "#{@file}:#{ind + 1}: Use #{@max_space} (not #{@white_space}) spaces for indentation" 
+        @tester += 2
+      end
       @max_space += 2 if lines.include?('class') || lines.include?('def')
       @counter += 1 if lines.include?('def')
-    end
+      end
   end
-
+# rubocop:enable Metrics/CyclomaticComplexity
   def trailing_white_space(lines, ind)
     if lines[-2] == ' ' || lines[-1] == ' '
       @errors << "#{@file}:#{ind + 1}: trailing white space, please"\
