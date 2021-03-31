@@ -1,6 +1,7 @@
 # Error Class to find all the errors
 class Error
   private
+
   def indentation(lines, i)
     unless lines.strip.empty?
       @white_space = lines.index(lines.lstrip)
@@ -35,32 +36,32 @@ class Error
     end
   end
 
-  def closing_brackets(lines, i)
-    if !@brackets.empty? && @stopper == 0
-      @errors << "#{@file}:#{i}: Expecting a closing bracket \')\',\'}\',\']\'"
+  def closing_brackets(lines, ind)
+    if !@brackets.empty? && @stopper.zero?
+      @errors << "#{@file}:#{ind}: Expecting a closing bracket \')\',\'}\',\']\'"
       @stopper += 1
     end
 
     lines.each_char do |brack|
       case brack
       when '(', '{', '['
-        @brackets[brack] = i + 1
+        @brackets[brack] = ind + 1
         @bracky.push(brack)
       when ')'
         if @bracky.pop != '('
-          @errors << "#{@file}:#{i + 1}: Unexpected closing bracket \')\'"
+          @errors << "#{@file}:#{ind + 1}: Unexpected closing bracket \')\'"
         else
           @brackets.delete('(')
         end
       when '}'
         if @bracky.pop != '{'
-          @errors << "#{@file}:#{i + 1}: Unexpected closing bracket \'}\'"
+          @errors << "#{@file}:#{ind + 1}: Unexpected closing bracket \'}\'"
         else
           @brackets.delete('{')
         end
       when ']'
         if @bracky.pop != '['
-          @errors << "#{@file}:#{i + 1}: Unexpected closing bracket \']\'"
+          @errors << "#{@file}:#{ind + 1}: Unexpected closing bracket \']\'"
         else
           @brackets.delete('[')
         end
@@ -68,26 +69,27 @@ class Error
     end
   end
 
-  def empty_line(lines, i)
-    if lines[i].strip.empty? && @counter > 0
-      @errors << "#{@file}:#{i + 1}: Empty line, please remove the empty line"
+  def empty_line(lines, ind)
+    if lines[ind].strip.empty? && @counter > 0
+      @errors << "#{@file}:#{ind + 1}: Empty line, please remove the empty line"
     end
   end
 public
+
   def check
     @lines.length.times do |i|
       open_close(@lines[i])
-      break if @stopper > 0
+      break if @stopper.positive?
 
       closing_brackets(@lines[i], i)
-      if @counter_end < 0
+      if @counter_end.negative?
         @errors << "#{@file}:#{i + 1}: unexpected keyword END"
         break
       end
       trailing_white_space(@lines[i], i)
       indentation(@lines[i], i)
       empty_line(@lines, i)
-      if @counter_end > 0 && i == @lines.length - 1
+      if @counter_end.positive? && i == @lines.length - 1
         @errors << "#{@file}:#{@lines.length}: missing"\
         ' keyword END'
       end
