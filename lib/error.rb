@@ -2,30 +2,23 @@
 class Error
   private
 
-  def indentation(lines, i)
-    unless lines.strip.empty?
+  def indentation(lines, ind)
       @white_space = lines.index(lines.lstrip)
+      unless lines.strip.empty?
       if lines.include?('end')
         @max_space -= 2
         @counter -= 1 if @counter != 0
       end
-
-      if @white_space != @max_space
-        @errors << "#{@file}:#{i + 1}: the indentation should be #{@max_space}"\
-        " spaces, instead of #{@white_space}"
-      end
-      if lines.include?('class') || lines.include?('def')
-        @max_space += 2
-        @counter += 1 if lines.include?('def')
-      end
+      @errors << "#{@file}:#{ind + 1}: the indentation should be #{@max_space}"\
+      " spaces, instead of #{@white_space}" if @white_space != @max_space
+      @max_space += 2 if lines.include?('class') || lines.include?('def')
+      @counter += 1 if lines.include?('def')
     end
   end
 
-  def trailing_white_space(lines, i)
-    if lines[-2] == ' ' || lines[-1] == ' '
-      @errors << "#{@file}:#{i + 1}: trailing white space, please"\
-      ' remove the white space'
-    end
+  def trailing_white_space(lines, ind)
+    @errors << "#{@file}:#{ind + 1}: trailing white space, please"\
+      ' remove the white space' if lines[-2] == ' ' || lines[-1] == ' '
   end
 
   def open_close(lines)

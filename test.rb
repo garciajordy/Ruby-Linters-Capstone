@@ -5,7 +5,7 @@ class Test
     @age = name.length]
     end
   end
-  def call_me
+  def call_me 
     puts "HEEEEY, #{@name}!!"
   end
 end 
