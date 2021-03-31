@@ -11,5 +11,6 @@ class FileReader < Error
     @bracky = []
     @errors = []
     @stopper = 0
+    @tester = 0
   end
 end

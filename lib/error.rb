@@ -17,8 +17,11 @@ class Error
   end
 
   def trailing_white_space(lines, ind)
-    @errors << "#{@file}:#{ind + 1}: trailing white space, please"\
-      ' remove the white space' if lines[-2] == ' ' || lines[-1] == ' '
+    if lines[-2] == ' ' || lines[-1] == ' '
+      @errors << "#{@file}:#{ind + 1}: trailing white space, please"\
+      ' remove the white space'
+      @tester += 1
+    end
   end
 
   def open_close(lines)
@@ -28,6 +31,7 @@ class Error
       @counter_end -= 1
     end
   end
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
   def closing_brackets(lines, ind)
     if !@brackets.empty? && @stopper.zero?
@@ -43,31 +47,38 @@ class Error
       when ')'
         if @bracky.pop != '('
           @errors << "#{@file}:#{ind + 1}: Unexpected closing bracket \')\'"
+        elsif @tester == 100
+          @tester = 0
         else
           @brackets.delete('(')
         end
       when '}'
         if @bracky.pop != '{'
           @errors << "#{@file}:#{ind + 1}: Unexpected closing bracket \'}\'"
+        elsif @tester == 100
+          @tester = 0
         else
           @brackets.delete('{')
         end
       when ']'
         if @bracky.pop != '['
           @errors << "#{@file}:#{ind + 1}: Unexpected closing bracket \']\'"
+        elsif @tester == 100
+          @tester = 0
         else
           @brackets.delete('[')
         end
       end
     end
   end
-
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def empty_line(lines, ind)
-    if lines[ind].strip.empty? && @counter > 0
+    if lines[ind].strip.empty? && @counter.positive?
       @errors << "#{@file}:#{ind + 1}: Empty line, please remove the empty line"
     end
   end
-public
+
+  public
 
   def check
     @lines.length.times do |i|
