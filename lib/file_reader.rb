@@ -1,5 +1,6 @@
 require_relative 'error'
 class FileReader < Error
+  super
   def initialize(file_name)
     @file = file_name.to_s
     @lines = File.readlines(@file)
