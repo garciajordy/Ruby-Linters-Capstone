@@ -2,7 +2,7 @@
 class Error
   private
 
-  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def indentation(lines, ind)
     @white_space = lines.index(lines.lstrip)
     if lines.strip.length.positive?
@@ -16,10 +16,12 @@ class Error
       end
       @max_space += 2 if lines.include?('class') || lines.include?('def')
       @counter += 1 if lines.include?('def')
+    elsif @tester > 50
+      @tester = 5
     end
   end
 
-  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def trailing_white_space(lines, ind)
     if lines[-2] == ' ' || lines[-1] == ' '
       @errors << "#{@file}:#{ind + 1}: trailing white space, please"\
@@ -82,6 +84,8 @@ class Error
   def empty_line(lines, ind)
     if lines[ind].strip.empty? && @counter.positive?
       @errors << "#{@file}:#{ind + 1}: Empty line, please remove the empty line"
+    elsif @tester > 50
+      @tester = 5
     end
   end
 
