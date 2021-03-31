@@ -1,7 +1,6 @@
 require_relative 'error'
 class FileReader < Error
   def initialize(file_name)
-    super
     @file = file_name.to_s
     @lines = File.readlines(@file)
     @max_space = 0
@@ -10,7 +9,7 @@ class FileReader < Error
     @counter_end = 0
     @brackets = {}
     @bracky = []
+    @errors = []
     @stopper = 0
-    @tester = 0
   end
 end
