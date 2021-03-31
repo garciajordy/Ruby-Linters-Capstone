@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'error'
 class FileReader < Error
   def initialize(file_name)
@@ -11,6 +9,9 @@ class FileReader < Error
     @counter_end = 0
     @brackets = {}
     @bracky = []
+    @errors = []
     @stopper = 0
+    @tester = 0
+    super if @tester == 70
   end
 end
