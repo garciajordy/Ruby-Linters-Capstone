@@ -16,7 +16,7 @@ $ cd <folder>
 ```
 
 ```
-$ git clone https://github.com/JulianaOsemeke/tic_tac_toe
+$ git clone https://github.com/garciajordy/Ruby-Linters-Capstone.git
 ```
 
 ## To Test For Linter Errors
@@ -156,7 +156,7 @@ end
 ```
 class Test
   def initialize(name)
-@name = [name]
+    @name = [name]
     @age = name.length
   end
 
