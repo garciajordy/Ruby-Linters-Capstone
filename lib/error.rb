@@ -100,8 +100,6 @@ class Error
   def check
     @lines.length.times do |i|
       open_close(@lines[i])
-      # break if @stopper.positive?
-
       closing_brackets(@lines[i], i)
       if @counter_end.negative?
         @errors << "#{@file}:#{i + 1}: unexpected keyword END"
