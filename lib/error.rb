@@ -1,6 +1,6 @@
 # Error Class to find all the errors
 class Error
-  attr_accessor :white_space
+  attr_reader :white_space
 
   private
 
@@ -100,7 +100,7 @@ class Error
   def check
     @lines.length.times do |i|
       open_close(@lines[i])
-      break if @stopper.positive?
+      # break if @stopper.positive?
 
       closing_brackets(@lines[i], i)
       if @counter_end.negative?
